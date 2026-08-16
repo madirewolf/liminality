@@ -1,0 +1,24 @@
+# secrets - never commit
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+*.p12
+secrets.json
+credentials.json
+
+# os / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# node
+node_modules/
+dist/
+.vite/
+
+# --- pre-existing ---
+node_modules/
+dist/
