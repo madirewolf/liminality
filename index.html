@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>LIMINALITY</title>
+  <style>
+    :root {
+      --ink: #e8e6e1;
+      --dim: #8a877f;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { width: 100%; height: 100%; overflow: hidden; background: #050507; }
+    body {
+      font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+      color: var(--ink);
+      user-select: none;
+      -webkit-user-select: none;
+    }
+    canvas { display: block; }
+
+    #ui { position: fixed; inset: 0; pointer-events: none; z-index: 10; }
+
+    /* ---- title screen ---- */
+    #title-screen {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 1.2rem;
+      background: radial-gradient(ellipse at 50% 60%, rgba(10,10,14,0.82), rgba(4,4,6,0.97));
+      pointer-events: auto;
+      cursor: pointer;
+      transition: opacity 1.4s ease;
+    }
+    #title-screen.hidden { opacity: 0; pointer-events: none; }
+    #title-screen h1 {
+      font-size: clamp(2.4rem, 7vw, 5.5rem);
+      font-weight: 200;
+      letter-spacing: 0.55em;
+      margin-left: 0.55em; /* optically recenter letterspaced text */
+      color: var(--ink);
+      text-shadow: 0 0 30px rgba(200, 210, 255, 0.25);
+      animation: breathe 5s ease-in-out infinite;
+    }
+    @keyframes breathe {
+      0%, 100% { opacity: 0.85; text-shadow: 0 0 24px rgba(200,210,255,0.18); }
+      50%      { opacity: 1.0;  text-shadow: 0 0 44px rgba(210,190,255,0.4); }
+    }
+    #title-screen .tag {
+      font-size: 0.95rem; font-weight: 300;
+      letter-spacing: 0.28em; margin-left: 0.28em;
+      color: var(--dim);
+      text-transform: lowercase;
+    }
+    #title-screen .enter {
+      margin-top: 3rem;
+      font-size: 0.8rem; letter-spacing: 0.45em; margin-left: 0.45em;
+      color: var(--ink);
+      border: 1px solid rgba(232,230,225,0.25);
+      padding: 0.9em 2.2em 0.9em 2.65em;
+      animation: pulse 2.4s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { border-color: rgba(232,230,225,0.15); color: var(--dim); }
+      50%      { border-color: rgba(232,230,225,0.55); color: var(--ink); }
+    }
+    #title-screen .controls {
+      position: absolute; bottom: 2.2rem;
+      font-size: 0.7rem; letter-spacing: 0.2em;
+      color: rgba(138,135,127,0.6);
+    }
+
+    /* ---- in-game HUD ---- */
+    #crosshair {
+      position: absolute; left: 50%; top: 50%;
+      width: 4px; height: 4px; border-radius: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(232,230,225,0.55);
+      box-shadow: 0 0 6px rgba(232,230,225,0.35);
+      opacity: 0; transition: opacity 0.8s;
+    }
+    body.playing #crosshair { opacity: 1; }
+
+    #hint {
+      position: absolute; left: 50%; bottom: 12%;
+      transform: translateX(-50%);
+      font-size: 0.85rem; font-weight: 300;
+      letter-spacing: 0.32em; text-align: center;
+      color: rgba(232,230,225,0.85);
+      text-shadow: 0 0 12px rgba(0,0,0,0.8);
+      opacity: 0; transition: opacity 0.6s ease;
+      white-space: nowrap;
+    }
+    #hint.visible { opacity: 1; }
+
+    #toast {
+      position: absolute; left: 50%; top: 38%;
+      transform: translateX(-50%);
+      font-size: clamp(1.1rem, 3vw, 2rem); font-weight: 200;
+      letter-spacing: 0.6em; margin-left: 0.6em;
+      text-align: center; white-space: nowrap;
+      color: var(--ink);
+      text-shadow: 0 0 24px rgba(255,255,255,0.4);
+      opacity: 0; transition: opacity 1.1s ease;
+    }
+    #toast.visible { opacity: 1; }
+  </style>
+</head>
+<body>
+  <div id="ui">
+    <div id="crosshair"></div>
+    <div id="hint"></div>
+    <div id="toast"></div>
+    <div id="title-screen">
+      <h1>LIMINALITY</h1>
+      <p class="tag">a rave is buried somewhere in these walls</p>
+      <p class="enter">CLICK TO ENTER</p>
+      <p class="controls">WASD — MOVE&nbsp;&nbsp;&nbsp;MOUSE — LOOK&nbsp;&nbsp;&nbsp;Q / E — TUNE&nbsp;&nbsp;&nbsp;HEADPHONES — RECOMMENDED</p>
+    </div>
+  </div>
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
